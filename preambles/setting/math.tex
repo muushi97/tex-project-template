@@ -1,0 +1,10 @@
+%------------------------------------------------------------------------
+% change the numbering \equation with (section.equation)
+%------------------------------------------------------------------------
+\makeatletter
+    \renewcommand{\theequation} {%
+        %\arabic{chapter}.\arabic{section}.\arabic{equation}}
+        \arabic{section}.\arabic{equation}}
+    \@addtoreset{equation}{section}
+\makeatother
+

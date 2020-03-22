@@ -1,0 +1,57 @@
+%------------------------------------------------------------------------
+% usepackages
+%------------------------------------------------------------------------
+% 使用可能な色を増やす
+\usepackage[dvipsnames,svgnames,x11names,dvipdfmx,table,xcdraw]{xcolor}
+% 画像読込みを可能に
+\usepackage[dvipdfmx]{graphicx}
+% レイアウト変更用
+\usepackage{geometry}
+% 出力用紙サイズのみの変更
+\usepackage{bxpapersize}
+% セクションのサイズ等を変更
+\usepackage{titlesec}
+% テーブルのセル内で改行を可能に
+\usepackage{tabularx}
+% 画像の位置を書いた位置に矯正
+\usepackage{here}
+% url の表示を可能に
+\usepackage{url}
+% ソースコード表示用
+\usepackage{listings, jlisting}
+% otf フォントを使用可能に
+\usepackage[uplatex]{otf}
+% フォントエンコーディングをT1に変更し、欧文フォントのデフォルトを Latin Modern に変える
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+% 図を複数個同一環境にならべたときにキャプションを個別につけられるように
+\makeatletter
+\let\MYcaption\@makecaption
+\makeatother
+\usepackage{subcaption}
+\captionsetup{compatibility=false}
+\makeatletter
+\let\@makecaption\MYcaption
+\makeatother
+
+% 数式系
+\usepackage{amsmath, amssymb}
+\usepackage{diffcoeff}
+\usepackage{newtxmath, newtxtext}
+\usepackage{bm}
+\usepackage{ascmac}
+% hyperlink
+\usepackage[dvipdfmx, bookmarkstype=toc, colorlinks=true, linkcolor=cyan, pdfborder={0 0 0}, bookmarks=true, bookmarksnumbered=true, hypertexnames=false]{hyperref}
+\usepackage{pxjahyper}
+% 参照を便利に
+\usepackage{cleveref}
+% 参照した数式のみに数式番号をつける
+\usepackage{autonum}
+% 数学系いろいろ
+\usepackage{mathtools}
+
+% SI単位用
+\usepackage{siunitx}                    % SI
+
+
