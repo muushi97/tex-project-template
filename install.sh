@@ -11,7 +11,7 @@ ln -s ${TEMPLATE_DIRECTORY}/preambles ${PROJECT_DIRECTORY}/preambles
 ln -s ${TEMPLATE_DIRECTORY}/Makefile ${PROJECT_DIRECTORY}/Makefile
 ln -s ${TEMPLATE_DIRECTORY}/.gitignore ${PROJECT_DIRECTORY}/.gitignore
 #mkdir -p ${PROJECT_DIRECTORY}/images
-cp -r ./images ${PROJECT_DIRECTORY}/images
-cp ./master.tex ${PROJECT_DIRECTORY}/master.tex
+cp -rb ./images ${PROJECT_DIRECTORY}/images
+cp -b ./master.tex ${PROJECT_DIRECTORY}/master.tex
 
 
