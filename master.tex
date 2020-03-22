@@ -1,0 +1,296 @@
+\documentclass[uplatex, 11pt, a4j, dvipdfmx]{jsarticle}
+
+%------------------------------------------------------------------------
+% プリアンブル読み込み
+%------------------------------------------------------------------------
+\input{./preambles/all.tex}
+
+
+\title{自分用texチートシート}
+\author{muushi97}
+\date{}
+
+% -----------------------------------------------------------------------
+% 本文
+% -----------------------------------------------------------------------
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\section{基本}
+  \subsection{図}
+    \subsubsection{図1つ}
+    図の挿入
+    \begin{verbatim}
+      \fig{images/hoge.png}{test}{a}{H}{width=1cm}
+    \end{verbatim}
+    \fig{images/hoge.png}{test}{a}{H}{width=1cm}
+
+    図の参照
+    \begin{verbatim}
+      \cref{fig:a}
+    \end{verbatim}
+    \cref{fig:a}
+
+
+  \subsection{表}
+    表の挿入
+    \begin{verbatim}
+      \begin{tab}{H}{hoge}{|l|l|l|}{a} \hline
+        衝突パラメータ & シミュレーションで得た屈折角 & 屈折角の理論値 \\ \hline
+        $0.9  \cdot  0.00464918$ & 0.000009384343336 & 0.000009437262261 \\
+        $1.0  \cdot  0.00464918$ & 0.000008441030730 & 0.000008493536035 \\
+        $1.25 \cdot  0.00464918$ & 0.000006743259391 & 0.000006794828828 \\
+        $1.5  \cdot  0.00464918$ & 0.000005611538341 & 0.000005662357357 \\
+        $2.0  \cdot  0.00464918$ & 0.000004197223722 & 0.000004246768018 \\ \hline
+      \end{tab}
+    \end{verbatim}
+    \begin{tab}{H}{hoge}{|l|l|l|}{a} \hline
+      衝突パラメータ & シミュレーションで得た屈折角 & 屈折角の理論値 \\ \hline
+      $0.9  \cdot  0.00464918$ & 0.000009384343336 & 0.000009437262261 \\
+      $1.0  \cdot  0.00464918$ & 0.000008441030730 & 0.000008493536035 \\
+      $1.25 \cdot  0.00464918$ & 0.000006743259391 & 0.000006794828828 \\
+      $1.5  \cdot  0.00464918$ & 0.000005611538341 & 0.000005662357357 \\
+      $2.0  \cdot  0.00464918$ & 0.000004197223722 & 0.000004246768018 \\ \hline
+    \end{tab}
+
+    表の参照
+    \begin{verbatim}
+      \cref{tab:a}
+    \end{verbatim}
+    \cref{tab:a}
+
+
+  \subsection{プログラム}
+    \begin{verbatim}
+    \end{verbatim}
+
+
+  \subsection{その他}
+    改ページ
+    \begin{verbatim}
+      \clearpage
+    \end{verbatim}
+    \clearpage
+
+    リンクされる文字
+    \begin{verbatim}
+      \hypertarget{name}{text}
+    \end{verbatim}
+    \hypertarget{name}{text}
+
+    リンク
+    \begin{verbatim}
+      \hyperlink{name}{text}
+    \end{verbatim}
+    \hyperlink{name}{text}
+
+
+\section{数式関連}
+  \subsection{定義}
+    \begin{verbatim}
+      \begin{dfn}
+        \label{dfn:hoge}
+        test
+      \end{dfn}
+    \end{verbatim}
+    \begin{screen}
+      \begin{dfn}
+        \label{dfn:hoge}
+        test
+      \end{dfn}
+    \end{screen}
+
+    参照
+    \begin{verbatim}
+      \cref{dfn:hoge}
+    \end{verbatim}
+    \cref{dfn:hoge}
+
+  \subsection{定理}
+    \begin{verbatim}
+      \begin{thm}
+        \label{thm:hoge}
+        test
+      \end{thm}
+    \end{verbatim}
+    \begin{thm}
+      \label{thm:hoge}
+      test
+    \end{thm}
+
+    参照
+    \begin{verbatim}
+      \cref{thm:hoge}
+    \end{verbatim}
+    \cref{thm:hoge}
+
+  \subsection{証明}
+    \begin{verbatim}
+      \begin{proof}
+        \label{proof:hoge}
+        test
+      \end{proof}
+    \end{verbatim}
+    \begin{proof}
+      \label{proof:hoge}
+      test
+    \end{proof}
+
+    参照
+    \begin{verbatim}
+      \cref{proof:hoge}
+    \end{verbatim}
+    \cref{proof:hoge}
+
+  \subsection{数式}
+    \subsubsection{数式環境}
+      1行だけの数式
+      \begin{verbatim}
+        \begin{equation}
+          \label{eq:test}
+          y = x^2
+        \end{equation}
+      \end{verbatim}
+      \begin{equation}
+        y = x^2 \label{eq:test1}
+      \end{equation}
+
+      複数行の数式(\&で位置揃え可能だが偶数個目の\&でスペースが入る)
+      \begin{equation}\begin{aligned}
+        y      &= x^2 & z     &= 10 \\
+        \alpha &= y   & \beta &=20
+      \end{aligned}\end{equation}
+      \begin{equation}
+        \left.
+        \begin{aligned}
+          u_t + (u \cdot \nabla)u + \nabla p &= f \\
+          \operatorname{div} u               &= 0
+        \end{aligned}
+        \right\} 
+        \quad \text{Euler equation}
+      \end{equation}
+
+      複数行の数式(\&で位置揃え可能、スペースの入らないalign、行ごとの\&の数+1/2を計算していれる必要がある)
+      \begin{equation}\begin{alignedat}{2}
+        y      &= x^2 & z     &= 10 \\
+        \alpha &= y   & \beta &=20
+      \end{alignedat}\end{equation}
+      \begin{equation}
+        \left\{
+        \begin{alignedat}{4}
+            x &+2y & &+3z & &= 1   &        & \text{(A)} \\
+          -3x &+ y & &- z & &= 2   &        & \text{(B)} \\
+           2x &    & &- z & &= -1  & \qquad & \text{(C)}
+        \end{alignedat}
+        \right.
+      \end{equation}
+
+      複数行の環境の特殊なもの(各行で\&が1度しか使えず、強制的にスペースが入り左に波括弧が入る)
+      \begin{equation}
+        f(x) =
+        \begin{dcases}
+          e^{-1/x}, & x > 0 \\
+          0,        & x \le 0
+        \end{dcases}
+      \end{equation}
+      \&以降が数式環境にならないdcases
+      \begin{equation}
+        f(x) =
+        \begin{dcases*}
+          e^{-1/x}, & if $x>0$ \\
+          0,        & otherwise
+        \end{dcases*}
+      \end{equation}
+
+      式の列挙
+      \begin{equation}\begin{gathered}
+        (\sin x)' = \cos x, \quad (\cos x)' = -\sin x, \quad (\tan x)' = \frac{1}{\cos^2 x} \\
+        (e^x)' = e^x, \quad (\log x)' = \frac{1}{x}
+      \end{gathered}\end{equation}
+      \begin{equation}
+        S := \left\{ x \in \mathbb{R}^3 ;
+        \begin{gathered}
+          x_1 \ge 0, 0 \le x_2 \le 1, \\
+          x_1 + x_2 + x_3 = 1. 
+        \end{gathered} \right\}
+      \end{equation}
+      \begin{gather}
+        \sin(2x) = 2 \sin x \cos x, \\ 
+        \begin{split}
+            \cos(2x) &= \cos^2 x - \sin^2 x \\
+                     &= 1 - 2 \sin^2 x \\
+                     &= 2 \cos^2 x - 1,
+        \end{split} \\
+        \tan(2x) = \frac{2 \tan x}{1 - \tan^2 x}
+      \end{gather}
+
+    \subsubsection{集合}
+      括弧や縦棒の大きさが自動で代わるマクロ
+      \begin{equation}
+        \Set{ x \in P | x \geq p }
+      \end{equation}
+      \begin{equation}
+        \Set{ x\in \R^n | \sum_{i=1}^n x_i^2 = 1 }
+      \end{equation}
+
+    \subsubsection{微分}
+      普通の常微分
+      \begin{equation}
+        \diff{f(x)}{x} \label{eq:test2}
+      \end{equation}
+      \begin{equation}
+        \diff*{\diff{f(x)}{x}}{x} \label{eq:test2'}
+      \end{equation}
+
+      偏微分
+      \begin{equation}
+        \diffp{f(x, y)}{x} \label{eq:test3}
+      \end{equation}
+      \begin{equation}
+        \diffp{f(x, y)}{y, x} \label{eq:test4}
+      \end{equation}
+
+      高階微分
+      \begin{equation}
+        \diff[n]{f(x}{x} \label{eq:test5}
+      \end{equation}
+      \begin{equation}
+        \diffp[a, b]{f(x, y)}{y, x} \label{eq:test5'}
+      \end{equation}
+      \begin{equation}
+        \diffp[a, b][N]{f(x, y)}{y, x} \label{eq:test6}
+      \end{equation}
+
+      導関数値
+      \begin{equation}
+        \diff{f(x)}{x}[x=a] \label{eq:test7}
+      \end{equation}
+      \begin{equation}
+        \diffp{f(x, y)}{x, y}[x=a, y=b] \label{eq:test8}
+      \end{equation}
+
+      偏微分の周りに括弧をつける
+      \begin{equation}
+        \diffp{L}{q_i}-\diff*{\diffp{L}{\dot{q}_i}[]}{t}=0 \label{eq:test9}
+      \end{equation}
+
+
+
+    数式の参照
+    \begin{verbatim}
+      \cref{eq:test1}
+    \end{verbatim}
+    \cref{eq:test1}
+
+    \begin{verbatim}
+      \cref{eq:test9}
+    \end{verbatim}
+    \cref{eq:test9}
+
+
+\end{document}
+

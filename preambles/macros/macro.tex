@@ -1,0 +1,68 @@
+
+\crefname{figure}{図}{図}
+\crefname{subfigure}{図}{図}
+\crefname{table}{表}{表}
+\crefname{subtable}{表}{表}
+\crefname{equation}{式}{式}
+
+\newtheorem{dfn}{定義}
+\crefname{dfn}{定義}{定義}
+
+\newtheorem{thm}{定理}
+\crefname{thm}{定理}{定理}
+
+\newtheorem{lem}{補題}
+\crefname{lem}{補題}{補題}
+
+\newtheorem{coro}{系}
+\crefname{coro}{系}{系}
+
+\newtheorem{prop}{命題}
+\crefname{prop}{命題}{命題}
+
+\newtheorem{proof}{証明}
+\crefname{proof}{証明}{証明}
+
+\newtheorem{ex}{例}
+\crefname{ex}{例}{例}
+
+\newtheorem{rem}{注意}
+\crefname{rem}{注意}{注意}
+
+\crefformat{page}{#2#1#3{ページ}}%
+\crefrangeformat{page}{#3#1#4{〜}#5#2#6{ページ}}%
+\crefmultiformat{page}{#2#1#3{ページ}}%
+        {, #2#1#3{ページ}}{, #2#1#3}{, #2#1#3{ページ}}%
+\crefformat{section}{#2#1#3{節}}%
+\crefrangeformat{section}{#3#1#4{〜}#5#2#6{節}}%
+\crefmultiformat{section}{#2#1#3{節}}%
+        {, #2#1#3{節}}{, #2#1#3}{, #2#1#3{節}}%
+\crefformat{subsection}{#2#1#3{節}}%
+\crefrangeformat{subsection}{#3#1#4{〜}#5#2#6{節}}%
+\crefmultiformat{subsection}{#2#1#3{節}}%
+        {, #2#1#3{節}}{, #2#1#3}{, #2#1#3{節}}%
+\crefformat{subsubsection}{#2#1#3{節}}%
+\crefrangeformat{subsubsection}{#3#1#4{〜}#5#2#6{節}}%
+\crefmultiformat{subsubsection}{#2#1#3{節}}%
+        {, #2#1#3{節}}{, #2#1#3}{, #2#1#3{節}}%
+
+\crefformat{part}{{第}#2#1#3{部}}%
+\crefformat{chapter}{{第}#2#1#3{章}}%
+
+% fig
+\newcommand{\fig}[5]{\begin{figure}[#4]\begin{center}\includegraphics[#5]{#1}\caption{#2}\label{fig:#3}\end{center}\end{figure}}
+
+% tab
+\newenvironment{tab}[4]{\begin{table}[#1]\centering \caption{#2}\label{tab:#4}\begin{tabular}{#3}}{\end{tabular}\end{table}}
+
+% set
+\def\Set#1{\Setdef#1\Setdef}
+\def\Setdef#1|#2\Setdef{\left\{#1\,\;\mathstrut\vrule\,\;#2\right\}}%
+
+% sets
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+
