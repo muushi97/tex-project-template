@@ -19,13 +19,14 @@ SRCROOT    = .
 # all directoryes that have some .cpp files
 SRCDIRS    = $(shell find $(SRCROOT) -type d)
 # all source files
-SOURCES    = $(foreach dir, $(SRCDIRS), $(wildcard $(dir)/*.tex))
+SOURCES    = $(foreach dir, $(SRCDIRS), $(wildcard $(dir)/*.ltx))
 
 
 # link
 $(TARGETS): $(SOURCES)
+	mkdir -p .temp
 	$(LATEX) master.ltx
-	- mv master.pdf $(TARGETS)
+	- mv .temp/master.pdf $(TARGETS)
 
 # rebuild
 all: clean $(TARGETS)

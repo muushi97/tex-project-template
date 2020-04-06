@@ -1,4 +1,6 @@
 #!/usr/bin/env perl
+$aux_dir            = '.temp';
+$out_dir            = '.temp';
 $latex              = 'uplatex -synctex=1 -halt-on-error';
 $latex_silent       = 'uplatex -synctex=1 -halt-on-error -interaction=batchmode';
 $bibtex             = 'pbibtex';
