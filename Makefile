@@ -24,7 +24,7 @@ SOURCES    = $(foreach dir, $(SRCDIRS), $(wildcard $(dir)/*.tex))
 
 # link
 $(TARGETS): $(SOURCES)
-	$(LATEX) master.tex
+	$(LATEX) master.ltx
 	- mv master.pdf $(TARGETS)
 
 # rebuild
@@ -32,7 +32,7 @@ all: clean $(TARGETS)
 
 # clean build
 clean:
-	$(LATEX) -C master.tex
+	$(LATEX) -C master.ltx
 	- rm $(TARGETS)
 
 # build and run
