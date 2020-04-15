@@ -57,7 +57,7 @@
 \let\@makecaption\MYcaption
 \makeatother
 % 数式系
-\RequirePackage{amsmath}
+\RequirePackage{amsmath, amsthm}
 \RequirePackage{diffcoeff}
 \RequirePackage{newtxmath, newtxtext}
 \RequirePackage{ascmac}
@@ -183,6 +183,17 @@
 \crefname{subtable}{表}{表}
 \crefname{equation}{式}{式}
 
+\newtheoremstyle{mystyle}%   % スタイル名
+    {}%                      % 上部スペース
+    {}%                      % 下部スペース
+    {\normalfont}%           % 本文フォント
+    {}%                      % インデント量
+    {\bf}%                   % 見出しフォント
+    {}%                      % 見出し後の句読点, '.'
+    { }%                     % 見出し後のスペース, ' ' or \newline
+    {\underline{\thmname{#1}\thmnumber{#2} : \thmnote{#3}}} % 見出しの書式 (can be left empty, meaning `normal')
+\theoremstyle{mystyle} % スタイルの適用
+
 \newtheorem{dfn}{定義}
 \crefname{dfn}{定義}{定義}
 
@@ -199,7 +210,7 @@
 \crefname{prop}{命題}{命題}
 
 \expandafter\ifx\csname own@slideflag\endcsname\relax
-  \newtheorem{proof}{証明}
+  %\newtheorem{proof}{証明}
 \else
   \relax
 \fi
