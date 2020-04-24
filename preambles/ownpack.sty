@@ -62,6 +62,9 @@
 \RequirePackage{newtxmath, newtxtext}
 \RequirePackage{ascmac}
 
+%------------------------------------------------------------------------
+% hyperlink or beamer
+%------------------------------------------------------------------------
 \expandafter\ifx\csname own@slideflag\endcsname\relax
   % hyperlink
   \RequirePackage[dvipdfmx, bookmarkstype=toc, colorlinks=true, linkcolor=cyan, pdfborder={0 0 0}, bookmarks=true, bookmarksnumbered=true, hypertexnames=false]{hyperref}
@@ -85,11 +88,11 @@
   \usefonttheme{professionalfonts}                      % 数式の文字を通常の LaTeX と同じにする
   %\usefonttheme[onlymath]{serif}                       % 数式環境のみセリフ体
   % 日本語の文字化け対策
-  \usepackage{bxdpx-beamer}
+  \RequirePackage{bxdpx-beamer}
 \fi
 \RequirePackage{pxjahyper}
 
-\usepackage{tikz}
+\RequirePackage{tikz}
 \usetikzlibrary{positioning}
 % 参照を便利に
 \RequirePackage{cleveref}
@@ -99,6 +102,12 @@
 \RequirePackage{mathtools}
 % SI単位用
 \RequirePackage{siunitx}
+
+% for multi-file project
+%\usepackage[subpreambles=true]{standalone}
+\RequirePackage{standalone}
+\RequirePackage{import}
+\RequirePackage{xr}
 
 % for handout
 \expandafter\ifx\csname own@handoutflag\endcsname\relax
@@ -259,11 +268,39 @@
 \newcommand{\Q}{\mathbb{Q}}
 \newcommand{\C}{\mathbb{C}}
 
+% description の各アイテムへのラベル付け
+\makeatletter
+\def\namedlabel#1#2{\begingroup
+   \def\@currentlabel{#2}%
+   \label{#1}\endgroup
+}
+\makeatother
+\newcommand{\descitem}[2]{\item[#1\namedlabel{#2}{#1}]}
+
 
 %------------------------------------------------------------------------
 % other setting
 %------------------------------------------------------------------------
 %\setlength{\columnsep}{3zw}
 \setcounter{tocdepth}{3}                       % chenge the depth displayed in the table of contents
+
+
+%------------------------------------------------------------------------
+% math macro
+%------------------------------------------------------------------------
+% ベクトルコマンド
+\newcommand{\vect}[1]{\mathbf{#1}}
+% ノルムコマンド
+\newcommand{\norm}[1]{{\left\lVert#1\right\rVert}}
+% 絶対値
+\newcommand{\abs}[1]{{\left\lvert#1\right\rvert}}
+
+% argmax, argmin
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+% sgn
+\DeclareMathOperator{\sgn}{sgn}
+
 
 
