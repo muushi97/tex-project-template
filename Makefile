@@ -15,31 +15,53 @@ TARGETS    = $(shell basename $(shell pwd)).pdf
 # output directory
 TARGETDIR  = .
 # source directory
-SRCROOT    = .
+SRCROOT    = ./sources
 # all directoryes that have some .cpp files
 SRCDIRS    = $(shell find $(SRCROOT) -type d)
 # all source files
 SOURCES    = $(foreach dir, $(SRCDIRS), $(wildcard $(dir)/*.ltx))
+# object directory
+OBJROOT    = ./.temp
+# all directoryes that have some object files
+OBJDIRS    = $(subst $(SRCROOT), $(OBJROOT), $(SRCDIRS))
+# all object files
+OBJECTS    = $(subst $(SRCROOT), $(OBJROOT), $(SOURCES:.ltx=.pdf))
+# pdf directory
+PDFROOT    = ./pdf
+# all pdf directories
+PDFDIRS    = $(subst $(SRCROOT), $(PDFROOT), $(SRCDIRS))
+# all pdf files
+PDFILES    = $(subst $(SRCROOT), $(PDFROOT), $(SOURCES:.ltx=.pdf))
 
 
 # link
-$(TARGETS): $(SOURCES)
-	mkdir -p .temp
-	$(LATEX) master.ltx
-	- mv .temp/master.pdf $(TARGETS)
+$(TARGETS): $(PDFILES)
+	cp $(OBJROOT)/master.pdf $(TARGETS)
+
+# for pdf files
+$(PDFROOT)/%.pdf: $(OBJROOT)/%.pdf
+	mkdir -p $(dir $@)
+	cp $< $@
+
+# for object files
+$(OBJROOT)/%.pdf: $(SRCROOT)/%.ltx
+	mkdir -p $(dir $@)
+	$(LATEX) $< -auxdir=$(dir $@) -outdir=$(dir $@)
+	#$(LATEX) $< -cd $(SRCROOT) -auxdir=../$(OBJROOT) -outdir=../$(OBJROOT)
 
 # rebuild
 all: clean $(TARGETS)
 
 # clean build
 clean:
-	$(LATEX) -C master.ltx
 	- rm $(TARGETS)
+	- rm $(OBJECTS)
+	- rm -r $(OBJDIRS)
 
 # build and run
 view: $(TARGETS)
 	- evince $(TARGETS)
 
 # not files
-.PHONY: all clean
+.PHONY: all clean view
 
