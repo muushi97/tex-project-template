@@ -35,7 +35,7 @@ PDFILES    = $(subst $(SRCROOT), $(PDFROOT), $(SOURCES:.ltx=.pdf))
 
 
 # link
-$(TARGETS): $(PDFILES)
+$(TARGETS): $(OBJECTS) $(PDFILES)
 	cp $(OBJROOT)/master.pdf $(TARGETS)
 
 # for pdf files
