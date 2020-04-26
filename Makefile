@@ -50,7 +50,10 @@ $(OBJROOT)/%.pdf: $(SRCROOT)/%.ltx
 	#$(LATEX) $< -cd $(SRCROOT) -auxdir=../$(OBJROOT) -outdir=../$(OBJROOT)
 
 # rebuild
-all: clean $(TARGETS)
+all: touch $(TARGETS)
+
+touch:
+	- touch $(SOURCES)
 
 # clean build
 clean:
@@ -63,5 +66,5 @@ view: $(TARGETS)
 	- evince $(TARGETS)
 
 # not files
-.PHONY: all clean view
+.PHONY: all clean touch view
 
