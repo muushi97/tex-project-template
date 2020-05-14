@@ -55,6 +55,10 @@ all: touch $(TARGETS)
 touch:
 	- touch $(SOURCES)
 
+%.ltx:
+	#- touch $(SRCROOT)/$@
+	- cp .template/sub-template.ltx $(SRCROOT)/$@
+
 # clean build
 clean:
 	- rm $(TARGETS)

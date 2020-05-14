@@ -13,7 +13,7 @@ ln -s ${TEMPLATE_DIRECTORY}/.gitignore ${PROJECT_DIRECTORY}/.gitignore
 mkdir -p ${PROJECT_DIRECTORY}/images
 mkdir -p ${PROJECT_DIRECTORY}/sources
 #cp -rb ./images ${PROJECT_DIRECTORY}/images
-cp -b ./master.ltx ${PROJECT_DIRECTORY}/sources/master.ltx
+cp -b ./master-template.ltx ${PROJECT_DIRECTORY}/sources/master.ltx
 
 cd ${PROJECT_DIRECTORY}
 ln -s ./sources/master.ltx ./master.ltx
