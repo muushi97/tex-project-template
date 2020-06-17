@@ -26,6 +26,8 @@ OBJROOT    = ./.temp
 OBJDIRS    = $(subst $(SRCROOT), $(OBJROOT), $(SRCDIRS))
 # all object files
 OBJECTS    = $(subst $(SRCROOT), $(OBJROOT), $(SOURCES:.ltx=.pdf))
+# bibliography root
+BIBROOT    = ./bibliography
 # pdf directory
 PDFROOT    = ./pdf
 # all pdf directories
@@ -58,6 +60,10 @@ touch:
 %.ltx:
 	#- touch $(SRCROOT)/$@
 	- cp .template/sub-template.ltx $(SRCROOT)/$@
+
+%.bib:
+	- mkdir -p $(BIBROOT)
+	- cp .template/bib-template.bib $(BIBROOT)/$@
 
 # clean build
 clean:
