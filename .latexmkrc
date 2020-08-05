@@ -3,7 +3,8 @@
 #$out_dir            = '../.temp'
 $latex              = 'uplatex -synctex=1 -halt-on-error';
 $latex_silent       = 'uplatex -synctex=1 -halt-on-error -interaction=batchmode';
-$bibtex             = 'pbibtex';
+$bibtex             = 'pbibtex %O %B -kanji=utf8';
+$biber              = 'biber %O --bblencoding=utf8 -u -U --output_safechars %B';
 $dvipdf             = 'dvipdfmx %O -o %D %S';
 $makeindex          = 'mendex %O -o %D %S';
 $max_repeat         = 5;

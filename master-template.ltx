@@ -1,25 +1,29 @@
 \documentclass[uplatex, 11pt, a4j, dvipdfmx]{jsarticle}
-
-%------------------------------------------------------------------------
-% パッケージ
-%------------------------------------------------------------------------
 \usepackage{./preambles/ownpack}
+%\documentclass[uplatex, 11pt, cjk, dvipdfmx]{beamer}
+%\usepackage[slide]{./preambles/ownpack}
+%\usepackage[slide,handout]{./preambles/ownpack}
 
-
-\title{title}
-\author{muushi97}
+%------------------------------------------------------------------------
+% 表紙
+%------------------------------------------------------------------------
+\title[タイトル]{タイトル}
+\subtitle{副題}
+\author{名前}
+\institute[省略]{所属\texttt{example@example.com}}
 \date{}
-
+  
 % -----------------------------------------------------------------------
 % 本文
 % -----------------------------------------------------------------------
-
 \begin{document}
-
   \maketitle
   \tableofcontents
 
 
-
+  % 参考文献
+  \nocite{*}
+  \bibliographystyle{jplain}
+  %\bibliography{example1,example2}
 \end{document}
 
