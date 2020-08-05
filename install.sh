@@ -12,8 +12,8 @@ ln -s ${TEMPLATE_DIRECTORY}/Makefile ${PROJECT_DIRECTORY}/Makefile
 ln -s ${TEMPLATE_DIRECTORY}/.gitignore ${PROJECT_DIRECTORY}/.gitignore
 mkdir -p ${PROJECT_DIRECTORY}/images
 mkdir -p ${PROJECT_DIRECTORY}/sources
+mkdir -p ${PROJECT_DIRECTORY}/scripts
 mkdir -p ${PROJECT_DIRECTORY}/bibliography
-#cp -rb ./images ${PROJECT_DIRECTORY}/images
 cp -b ./master-template.ltx ${PROJECT_DIRECTORY}/sources/master.ltx
 
 cd ${PROJECT_DIRECTORY}

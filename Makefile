@@ -8,31 +8,30 @@
 #                                                                        #
 # ---------------------------------------------------------------------- #
 
-# compiler
 LATEX      = latexmk
-# output
-TARGETS    = $(shell basename $(shell pwd)).pdf
-# output directory
+
 TARGETDIR  = .
-# source directory
+TARGETS    = $(shell basename $(shell pwd)).pdf
+
 SRCROOT    = ./sources
-# all directoryes that have some .cpp files
 SRCDIRS    = $(shell find $(SRCROOT) -type d)
-# all source files
 SOURCES    = $(foreach dir, $(SRCDIRS), $(wildcard $(dir)/*.ltx))
-# object directory
+
 OBJROOT    = ./.temp
-# all directoryes that have some object files
 OBJDIRS    = $(subst $(SRCROOT), $(OBJROOT), $(SRCDIRS))
-# all object files
 OBJECTS    = $(subst $(SRCROOT), $(OBJROOT), $(SOURCES:.ltx=.pdf))
-# bibliography root
+
+IMAGEROOT  = ./images
+
+SCRIPTROOT  = ./scripts
+SCRIPTDIRS  = $(shell find $(SCRIPTROOT) -type d)
+PLOTSCRIPTS = $(foreach dir, $(SCRIPTDIRS), $(wildcard $(dir)/*.plt))
+PLOTIMAGES  = $(subst $(SCRIPTROOT), $(IMAGEROOT), $(PLOTSCRIPTS:.plt=.ltx))
+
 BIBROOT    = ./bibliography
-# pdf directory
+
 PDFROOT    = ./pdf
-# all pdf directories
 PDFDIRS    = $(subst $(SRCROOT), $(PDFROOT), $(SRCDIRS))
-# all pdf files
 PDFILES    = $(subst $(SRCROOT), $(PDFROOT), $(SOURCES:.ltx=.pdf))
 
 
@@ -46,10 +45,14 @@ $(PDFROOT)/%.pdf: $(OBJROOT)/%.pdf
 	cp $< $@
 
 # for object files
-$(OBJROOT)/%.pdf: $(SRCROOT)/%.ltx
+$(OBJROOT)/%.pdf: $(SRCROOT)/%.ltx $(PLOTIMAGES)
 	mkdir -p $(dir $@)
+	(ls $(BIBROOT)/*.bib | xargs -I{} basename {}) | xargs -I{} ln -s -f -n .${BIBROOT}/{} $(OBJROOT)/{}
 	$(LATEX) $< -auxdir=$(dir $@) -outdir=$(dir $@)
 	#$(LATEX) $< -cd $(SRCROOT) -auxdir=../$(OBJROOT) -outdir=../$(OBJROOT)
+
+$(IMAGEROOT)/%.ltx: $(SCRIPTROOT)/%.plt
+	{ echo "set output '/dev/null'"; cat $<; echo "set term lua tikz size 12cm,12cm nopicenvironment tightboundingbox"; echo "set output '$@'"; echo "replot"; } | gnuplot
 
 # rebuild
 all: touch $(TARGETS)
@@ -58,12 +61,18 @@ touch:
 	- touch $(SOURCES)
 
 %.ltx:
-	#- touch $(SRCROOT)/$@
+	- mkdir -p $(SRCROOT)/$(@D)
 	- cp .template/sub-template.ltx $(SRCROOT)/$@
 
-%.bib:
-	- mkdir -p $(BIBROOT)
-	- cp .template/bib-template.bib $(BIBROOT)/$@
+article/%.bib:
+	- mkdir -p $(BIBROOT)/$(*D)
+	- cp .template/article-template.bib $(BIBROOT)/$*.bib
+book/%.bib:
+	- mkdir -p $(BIBROOT)/$(*D)
+	- cp .template/book-template.bib $(BIBROOT)/$*.bib
+url/%.bib:
+	- mkdir -p $(BIBROOT)/$(*D)
+	- cp .template/url-template.bib $(BIBROOT)/$*.bib
 
 # clean build
 clean:
