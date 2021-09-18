@@ -6,16 +6,25 @@ TEMPLATE_DIRECTORY=`dirname $0`
 
 cd ${TEMPLATE_DIRECTORY}
 
-ln -s ${TEMPLATE_DIRECTORY}/.latexmkrc ${PROJECT_DIRECTORY}/.latexmkrc
-ln -s ${TEMPLATE_DIRECTORY}/preambles ${PROJECT_DIRECTORY}/preambles
-ln -s ${TEMPLATE_DIRECTORY}/Makefile ${PROJECT_DIRECTORY}/Makefile
-ln -s ${TEMPLATE_DIRECTORY}/.gitignore ${PROJECT_DIRECTORY}/.gitignore
-mkdir -p ${PROJECT_DIRECTORY}/images
-mkdir -p ${PROJECT_DIRECTORY}/sources
-mkdir -p ${PROJECT_DIRECTORY}/scripts
-mkdir -p ${PROJECT_DIRECTORY}/bibliography
-cp -b ./master-template.ltx ${PROJECT_DIRECTORY}/sources/master.ltx
+PROJECT_SOURCES_DIRECTORY="sources"
+PROJECT_BIBLIOGRAPHIES_DIRECTORY="bibliographies"
+PROJECT_IMAGES_DIRECTORY="images"
 
-cd ${PROJECT_DIRECTORY}
-ln -s ./sources/master.ltx ./master.ltx
+ln -s ${TEMPLATE_DIRECTORY}/preambles ${PROJECT_DIRECTORY}/preambles
+mkdir -p ${PROJECT_DIRECTORY}/${PROJECT_SOURCES_DIRECTORY}
+mkdir -p ${PROJECT_DIRECTORY}/${PROJECT_BIBLIOGRAPHIES_DIRECTORY}
+mkdir -p ${PROJECT_DIRECTORY}/${PROJECT_IMAGES_DIRECTORY}
+
+cat <<EOS > "${PROJECT_DIRECTORY}/${PROJECT_SOURCES_DIRECTORY}/master.ltx"
+\documentclass[uplatex,11ptj,a4j,dvipdfmx]{jsarticle}
+
+\input{./preambles/package.ltx}
+\input{./preambles/listing.ltx}
+\input{./preambles/othersetting.ltx}
+\input{./preambles/macro.ltx}
+\input{./preambles/referencemacro.ltx}
+
+\author{}
+\date{}
+EOS
 

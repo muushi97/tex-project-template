@@ -1,0 +1,132 @@
+
+
+\newtheoremstyle{mystyle}%   % スタイル名
+    {}%                      % 上部スペース
+    {}%                      % 下部スペース
+    {\normalfont}%           % 本文フォント
+    {}%                      % インデント量
+    {\bf}%                   % 見出しフォント
+    {}%                      % 見出し後の句読点, '.'
+    { }%                     % 見出し後のスペース, ' ' or \newline
+    {\underline{\thmname{#1}\thmnumber{#2} : \thmnote{#3}}} % 見出しの書式
+\theoremstyle{mystyle} % スタイルの適用
+
+% 接続用のコマンド
+\newcommand{\crefpairconjunction}{と}% 2 つのラベルの区切り
+\newcommand{\crefrangeconjunction}{から}% 3 つ以上の連続するラベルの区切り
+\newcommand{\crefmiddleconjunction}{，}% 3 つ以上の不連続なラベルの間の区切り
+\newcommand{\creflastconjunction}{，および}% 3 つ以上の不連続なラベルの最後の区切り
+
+%\crefformat{type}{single-fomrat}
+%\crefrangeformat{type}{range-format}
+%\crefmultiformat{type}{first-format}{pair-format}{middle-format}{last-format}
+
+\crefname{figure}{図}{図}
+\crefformat{figure}{#2{図}#1#3}%
+\crefrangeformat{figure}{#3{図}#1#4{\crefrangeconjunction}#5{図}#2#6}%
+\crefmultiformat{figure}{#2{図}#1#3}%
+                {{\crefpairconjunction}#2{図}#1#3}%
+                {{\crefmiddleconjunction}#2{図}#1#3}%
+                {{\creflastconjunction}#2{図}#1#3}%
+\crefname{subfigure}{図}{図}
+\crefformat{subfigure}{#2{図}#1#3}%
+\crefrangeformat{subfigure}{#3{図}#1#4{\crefrangeconjunction}#5{図}#2#6}%
+\crefmultiformat{subfigure}{#2{図}#1#3}%
+                {{\crefpairconjunction}#2{図}#1#3}%
+                {{\crefmiddleconjunction}#2{図}#1#3}%
+                {{\creflastconjunction}#2{図}#1#3}%
+\crefname{table}{表}{表}
+\crefformat{table}{#2{表}#1#3}%
+\crefrangeformat{table}{#3{表}#1#4{\crefrangeconjunction}#5{表}#2#6}%
+\crefmultiformat{table}{#2{表}#1#3}%
+                {{\crefpairconjunction}#2{表}#1#3}%
+                {{\crefmiddleconjunction}#2{表}#1#3}%
+                {{\creflastconjunction}#2{表}#1#3}%
+\crefname{subtable}{表}{表}
+\crefformat{subtable}{#2{表}#1#3}%
+\crefrangeformat{subtable}{#3{表}#1#4{\crefrangeconjunction}#5{表}#2#6}%
+\crefmultiformat{subtable}{#2{表}#1#3}%
+                {{\crefpairconjunction}#2{表}#1#3}%
+                {{\crefmiddleconjunction}#2{表}#1#3}%
+                {{\creflastconjunction}#2{表}#1#3}%
+\crefname{equation}{式}{式}
+\crefformat{equation}{#2{式}#1#3}%
+%\creflabelformat{equation}{#2{式}#1#3}%
+\crefrangeformat{equation}{#3{式}#1#4{\crefrangeconjunction}#5{式}#2#6}%
+\crefmultiformat{equation}{#2{式}#1#3}%
+                {{\crefpairconjunction}#2{式}#1#3}%
+                {{\crefmiddleconjunction}#2{式}#1#3}%
+                {{\creflastconjunction}#2{式}#1#3}%
+\crefformat{part}{#2{第}#1{部}#3}%
+\crefformat{chapter}{#2{第}#1{章}#3}%
+\crefformat{page}{#2#1{ページ}#3}%
+\crefrangeformat{page}{#3#1#4{\crefrangeconjunction}#5#2#6{ページ}}%
+\crefmultiformat{page}{#2#1{ページ}#3}%
+                      {{\crefpairconjunction}#2#1{ページ}#3}%
+                      {{\crefmiddleconjunction}#2#1#3}%
+                      {{\creflastconjunction}#2#1{ページ}#3}%
+\crefformat{section}{#2#1#3{節}}%
+\crefrangeformat{section}{#3#1#4{\crefrangeconjunction}#5#2#6{節}}%
+\crefmultiformat{section}{#2#1{節}#3}%
+                         {{\crefpairconjunction}#2#1{節}#3}%
+                         {{\crefmiddleconjunction}#2#1#3}%
+                         {{\creflastconjunction}#2#1{節}#3}%
+\crefformat{subsection}{#2#1{節}#3}%
+\crefrangeformat{subsection}{#3#1#4{\crefrangeconjunction}#5#2#6{節}}%
+\crefmultiformat{subsection}{#2#1{節}#3}%
+                            {{\crefpairconjunction}#2#1{節}#3}%
+                            {{\crefmiddleconjunction}#2#1#3}%
+                            {{\creflastconjunction}#2#1{節}#3}%
+\crefformat{subsubsection}{#2#1{節}#3}%
+\crefrangeformat{subsubsection}{#3#1#4{\crefrangeconjunction}#5#2#6{節}}%
+\crefmultiformat{subsubsection}{#2#1{節}#3}%
+                               {{\crefpairconjunction}#2#1{節}#3}%
+                               {{\crefmiddleconjunction}#2#1#3}%
+                               {{\creflastconjunction}#2#1{節}#3}%
+
+% definition
+\newtheorem{definition}{定義}
+\crefname{definition}{定義}{定義}
+
+% theorem
+\newtheorem{theorem}{定理}
+\crefname{theorem}{定理}{定理}
+
+% lemma
+\newtheorem{lemma}{補題}
+\crefname{lemma}{補題}{補題}
+
+% corollary
+\newtheorem{corollary}{系}
+\crefname{corollary}{系}{系}
+
+% poposition
+\newtheorem{proposition}{命題}
+\crefname{proposition}{命題}{命題}
+
+% proof
+\crefname{proof}{証明}{証明}
+\newtheorem*{proof*}{証明}
+\crefname{proof*}{証明}{証明}
+
+% assumption
+\newtheorem{assumption}{仮定}
+\crefname{assumption}{仮定}{仮定}
+
+% example
+\newtheorem{example}{例}
+\crefname{example}{例}{例}
+
+% remark
+\newtheorem{remark}{注意}
+\crefname{remark}{注意}{注意}
+
+% description の各アイテムへのラベル付け
+\makeatletter
+\def\namedlabel#1#2{\begingroup
+   \def\@currentlabel{#2}%
+   \label{#1}\endgroup
+}
+\makeatother
+\newcommand{\descitem}[2]{\item[#1\namedlabel{#2}{#1}]}
+
