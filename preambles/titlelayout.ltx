@@ -1,0 +1,77 @@
+
+
+%------------------------------------------------------------------------
+% レイアウト設定
+%------------------------------------------------------------------------
+\geometry{% 上下左右のマージン
+  asymmetric,%                      両面刷り用
+  bindingoffset=10truemm,%          バインド要のオフセット
+  top=20truemm,%                    上
+  bottom=20truemm,%                 下
+  left=20truemm,%                   左
+  right=20truemm,%                  右
+  footskip=10truemm}%               本文の下とフッターの下の間隔
+\setlength{\columnsep}{10truemm}% e     =  8 mm
+\renewcommand{\baselinestretch}{0.9}% 行の間隔
+
+% タイトルの設定
+\makeatletter
+  \renewcommand{\maketitle}{%
+    \begin{titlepage}%
+      \newgeometry{%
+        top=60truemm,
+        bottom=60truemm,
+        left=40truemm,
+        right=35truemm
+      }%
+      \let\footnotesize\small
+      \let\footnoterule\relax
+      \let\footnote\thanks
+      %\null\vfil
+      %\if@slide
+      %  {\footnotesize \@date}%
+      %  \begin{center}
+      %    \mbox{} \\[1zw]
+      %    \large
+      %    {\maybeblue\hrule height0\jsc@mpt depth2\jsc@mpt\relax}\par
+      %    \jsc@smallskip
+      %    \@title
+      %    \jsc@smallskip
+      %    {\maybeblue\hrule height0\jsc@mpt depth2\jsc@mpt\relax}\par
+      %    \vfill
+      %    {\small \@author}%
+      %  \end{center}
+      %\else
+      %\vskip 60\jsc@mpt
+      \begin{center}%
+        {\LARGE \@title \par}%
+        %\vskip 3em%
+      \end{center}%
+        \vfill
+        {\large
+          %\lineskip .75em
+          \begin{tabular}[t]{l}%
+            \@author
+          \end{tabular}\par}%
+        %\vskip 1.5em
+        %{\large \@date \par}%
+      %\end{center}%
+      %\fi
+      %\par
+      %\@thanks\vfil\null
+      \restoregeometry
+    \end{titlepage}%
+    \setcounter{footnote}{0}%
+    \global\let\thanks\relax
+    \global\let\maketitle\relax
+    \global\let\@thanks\@empty
+    \global\let\@author\@empty
+    \global\let\@date\@empty
+    \global\let\@title\@empty
+    \global\let\title\relax
+    \global\let\author\relax
+    \global\let\date\relax
+    \global\let\and\relax
+  }%
+\makeatother
+

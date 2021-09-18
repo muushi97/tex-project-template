@@ -1,0 +1,63 @@
+
+% 使用可能な色を増やす
+\RequirePackage[dvipsnames,svgnames,x11names,dvipdfmx,table,xcdraw]{xcolor}
+% 画像読込みを可能に
+\RequirePackage[dvipdfmx]{graphicx}
+% レイアウト変更用
+\RequirePackage{geometry}
+% 出力用紙サイズのみの変更
+\RequirePackage{bxpapersize}
+% セクションのサイズ等を変更
+\RequirePackage{titlesec}
+% テーブルのセル内で改行を可能に
+\RequirePackage{tabularx}
+% 画像の位置を書いた位置に矯正
+\RequirePackage{here}
+% url の表示を可能に
+\RequirePackage{url}
+% ソースコード表示用
+%\RequirePackage{listings, jlisting}
+\RequirePackage{listings, jvlisting}
+% otf フォントを使用可能に
+\RequirePackage[uplatex]{otf}
+% フォントエンコーディングをT1に変更し、欧文フォントのデフォルトを Latin Modern に変える
+\RequirePackage[T1]{fontenc}
+\RequirePackage{lmodern}
+% 図を複数個同一環境にならべたときにキャプションを個別につけられるように
+\makeatletter
+\let\MYcaption\@makecaption
+\makeatother
+\RequirePackage{subcaption}
+\captionsetup{compatibility=false}
+\makeatletter
+\let\@makecaption\MYcaption
+\makeatother
+% 数式系
+\RequirePackage{amsmath,amsthm,amscd,amssymb}
+\RequirePackage{diffcoeff}
+\RequirePackage{newtxmath,newtxtext}
+\RequirePackage{ascmac}
+% pdf を読み込み可能に
+\RequirePackage{pdfpages}
+
+% hyperlink
+\RequirePackage[dvipdfmx, bookmarkstype=toc, colorlinks=false, linkcolor=black, pdfborder={0 0 0}, bookmarks=true, bookmarksnumbered=true, hypertexnames=false]{hyperref}
+\RequirePackage{pxjahyper}
+
+\RequirePackage{tikz}
+\RequirePackage{gnuplot-lua-tikz}
+\usetikzlibrary{positioning}
+% 参照を便利に
+\RequirePackage{cleveref}
+% 参照した数式のみに数式番号をつける
+\RequirePackage{autonum}
+% 数学系いろいろ
+\RequirePackage{mathtools}
+% SI単位用
+\RequirePackage{siunitx}
+
+% for multi-file project
+\RequirePackage{standalone}
+\RequirePackage{import}
+\RequirePackage{xr}
+

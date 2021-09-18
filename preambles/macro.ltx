@@ -1,0 +1,61 @@
+
+
+%------------------------------------------------------------------------
+% math macro
+%------------------------------------------------------------------------
+\newcommand{\vect}[1]{\boldsymbol{#1}}%               ベクトル
+\newcommand{\norm}[1]{{\left\lVert#1\right\rVert}}%   ノルム
+\newcommand{\abs}[1]{{\left\lvert#1\right\rvert}}%    絶対値
+\newcommand{\card}[1]{{\left\lvert#1\right\rvert}}%   濃度 (集合)
+
+\DeclareMathOperator*{\argmax}{arg\,max}%             argmax
+\DeclareMathOperator*{\argmin}{arg\,min}%             argmin
+\DeclareMathOperator{\sgn}{sgn}%                      sign
+%\DeclareMathOperator{\sup}{sup}%                      supremum
+\DeclareMathOperator{\lub}{lub}%                      leatest upper bound
+%\DeclareMathOperator{\inf}{inf}%                      infimum
+\DeclareMathOperator{\glb}{glb}%                      greatest lower bound
+\DeclareMathOperator{\Ker}{Ker}%                      kernel
+%\DeclareMathOperator{\Im}{Im}%                        image
+\DeclareMathOperator{\rk}{rk}%                        rank (線形写像)
+\DeclareMathOperator{\nul}{nul}%                      nullity (線形写像)
+%\DeclareMathOperator{\dim}{dim}%                      dimension
+\DeclareMathOperator{\id}{id}%                      id
+
+\newcommand{\N}{\mathbb{N}}%                          自然数集合
+\newcommand{\Z}{\mathbb{Z}}%                          整数
+\newcommand{\Q}{\mathbb{Q}}%                          有理数
+\newcommand{\R}{\mathbb{R}}%                          実数
+\newcommand{\C}{\mathbb{C}}%                          複素数
+
+% 関数
+\newcommand{\func}[2]{#1\mathopen{\left(\vphantom{#2}\kern-\nulldelimiterspace\right.}#2\mathclose{\left.\kern-\nulldelimiterspace\vphantom{#2}\right)}}
+
+% set
+\def\Set#1{\Setdef#1\Setdef}%                         集合の内包的記法
+\def\Setdef#1|#2\Setdef{\left\{#1\,\;\mathstrut\vrule\,\;#2\right\}}%
+
+% map
+\def\Map#1{\Mapdef#1\Mapdef}%                         写像用の記法
+\def\Mapdef#1:#2->#3\Mapdef{#1\colon#2\to#3}%
+
+% fraction
+\makeatletter
+  \let\old@frac\frac
+    \def\Fracdef#1/#2\Fracdef{\if@display \old@frac{#1}{#2} \else #1/#2 \fi}
+  \renewcommand\frac[2]{\Fracdef#1/#2\Fracdef}
+\makeatother
+
+% 転置行列
+\newcommand{\tr}[1]{\prescript{t\!}{}{#1}}
+
+\newcommand{\eqdef}{\coloneq}%                        定義
+\newcommand{\cratio}{\pi}%                            circle ratio
+\newcommand{\e}{\mathrm{e}}%                          Napier's constan
+\newcommand{\imag}{\mathrm{i}}%                       imaginary unit
+\newcommand{\lagr}{\mathcal{L}}%                      Lagrangian
+\newcommand{\hamil}{\mathcal{H}}%                     Hamiltonian
+\RequirePackage{mathrsfs}
+\newcommand{\lagrd}{\mathscr{L}}%                     Lagrangian density
+\newcommand{\hamild}{\mathscr{H}}%                    Hamiltonian density
+
