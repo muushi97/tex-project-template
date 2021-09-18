@@ -8,82 +8,141 @@
 #                                                                        #
 # ---------------------------------------------------------------------- #
 
-LATEX      = latexmk
+# コマンド類
+LATEX           := uplatex -synctex=1 -halt-on-error -interaction=batchmode -file-line-error
+BIBTEX          := pbibtex -kanji=utf8
+BIBER           := biber --bblencoding=utf8 -u -U --output_safechars;
+DVIPDF          := dvipdfmx
+MAKEINDEX       := mendex
 
-TARGETDIR  = .
-TARGETS    = $(shell basename $(shell pwd)).pdf
+# ターゲットのディレクトリ
+TARGETROOT      := .
+TARGETS         :=
 
-SRCROOT    = ./sources
-SRCDIRS    = $(shell find $(SRCROOT) -type d)
-SOURCES    = $(foreach dir, $(SRCDIRS), $(wildcard $(dir)/*.ltx))
+# TeX ファイルのディレクトリ
+SRCROOT         := ./sources
+SRCDIRS         := $(shell find $(SRCROOT) -type d)
+TEXFILES        := $(foreach dir, $(SRCDIRS), $(wildcard $(dir)/*.tex))
+LTXFILES        := $(foreach dir, $(SRCDIRS), $(wildcard $(dir)/*.ltx))
 
-OBJROOT    = ./.temp
-OBJDIRS    = $(subst $(SRCROOT), $(OBJROOT), $(SRCDIRS))
-OBJECTS    = $(subst $(SRCROOT), $(OBJROOT), $(SOURCES:.ltx=.pdf))
+# 一時ファイルのディレクトリ
+OBJROOT         := .temp
+OBJECTS         := $(subst $(SRCROOT),$(OBJROOT),$(TEXFILES:.tex=.aux)) $(subst $(SRCROOT),$(OBJROOT),$(LTXFILES:.ltx=.aux))
 
-IMAGEROOT  = ./images
+# 参考文献のディレクトリ
+BIBLIOGRAPHY    := ./bibliography
+OTHERDIRS       := $(BIBLIOGRAPHY) ./images ./preambles
 
-SCRIPTROOT  = ./scripts
-SCRIPTDIRS  = $(shell find $(SCRIPTROOT) -type d)
-PLOTSCRIPTS = $(foreach dir, $(SCRIPTDIRS), $(wildcard $(dir)/*.plt))
-PLOTIMAGES  = $(subst $(SCRIPTROOT), $(IMAGEROOT), $(PLOTSCRIPTS:.plt=.ltx))
+# 初回ビルドのフラグ
+FLAG            := $(OBJROOT)/.already
+# 最大繰り返し回数
+MAXREPEAT       := 10
 
-BIBROOT    = ./bibliography
+# PDF ビューア
+VIEWER          := evince
 
-PDFROOT    = ./pdf
-PDFDIRS    = $(subst $(SRCROOT), $(PDFROOT), $(SRCDIRS))
-PDFILES    = $(subst $(SRCROOT), $(PDFROOT), $(SOURCES:.ltx=.pdf))
+# 出力関係ファイル
+OUTPUT_PDF      := hoge.mk
 
+# 自動依存ファイル生成で依存先から除外する拡張子
+SOURCE_SUFF     := aux bbl out ind
 
-# link
-$(TARGETS): $(OBJECTS) $(PDFILES)
-	cp $(OBJROOT)/master.pdf $(TARGETS)
-
-# for pdf files
-$(PDFROOT)/%.pdf: $(OBJROOT)/%.pdf
-	mkdir -p $(dir $@)
-	cp $< $@
-
-# for object files
-$(OBJROOT)/%.pdf: $(SRCROOT)/%.ltx $(PLOTIMAGES)
-	mkdir -p $(dir $@)
-	(ls $(BIBROOT)/*.bib | xargs -I{} basename {}) | xargs -I{} ln -s -f -n .${BIBROOT}/{} $(OBJROOT)/{}
-	$(LATEX) $< -auxdir=$(dir $@) -outdir=$(dir $@)
-	#$(LATEX) $< -cd $(SRCROOT) -auxdir=../$(OBJROOT) -outdir=../$(OBJROOT)
-
-$(IMAGEROOT)/%.ltx: $(SCRIPTROOT)/%.plt
-	{ echo "set output '/dev/null'"; cat $<; echo "set term lua tikz size 12cm,12cm nopicenvironment tightboundingbox"; echo "set output '$@'"; echo "replot"; } | gnuplot
-
-# rebuild
-all: touch $(TARGETS)
-
-touch:
-	- touch $(SOURCES)
-
-%.ltx:
-	- mkdir -p $(SRCROOT)/$(@D)
-	- cp .template/sub-template.ltx $(SRCROOT)/$@
-
-article/%.bib:
-	- mkdir -p $(BIBROOT)/$(*D)
-	- cp .template/article-template.bib $(BIBROOT)/$*.bib
-book/%.bib:
-	- mkdir -p $(BIBROOT)/$(*D)
-	- cp .template/book-template.bib $(BIBROOT)/$*.bib
-url/%.bib:
-	- mkdir -p $(BIBROOT)/$(*D)
-	- cp .template/url-template.bib $(BIBROOT)/$*.bib
-
-# clean build
-clean:
-	- rm $(TARGETS)
-	- rm $(OBJECTS)
-	- rm -r $(OBJDIRS)
-
-# build and run
-view: $(TARGETS)
-	- evince $(TARGETS)
+# 除外拡張子が付く行を削除するコマンド生成
+EXCLUDE_SUFF    := grep -v$(foreach s,$(SOURCE_SUFF), -e \".$(s)\")
+# 依存関係生成関数
+define mkdepends
+grep -e "^INPUT" "$1" | $(EXCLUDE_SUFF) | sort | uniq | cut -d ' ' -f 2 | grep -v "^/" | awk '{ print $$0, "1"; print $$0, "2"; }' | sort -k 2n | tr '\n' ' ' | sed -e "s%$2 \+1%%g" | sed -e "s%^%$2: %" | sed -e "s/\([^ ]\+\)\( \+\)1/\1 /g; s/\([^ ]\+\)\( \+\)2/\n\1:/g;" | sed -e "s/  \+/ /g; s/ \+$$//g" | sed -e "s/\.ltx/\.aux/g"
+endef
 
 # not files
-.PHONY: all clean touch view
+.PHONY: all rebuild clean view
+
+# デフォルト
+all:
+
+# どの pdf を出力 pdf にするのか
+define template
+TARGETS         += $$(TARGETROOT)/$1
+$$(TARGETROOT)/$1: $$(OBJROOT)/$2
+	@mkdir -p $$(@D)
+	cp $$< $$@
+	@ln -f -s $$(subst .pdf,.synctex.gz,$$<) $$(subst .pdf,.synctex.gz,$$@)
+endef
+define template_samename
+TARGETS         += $$(TARGETROOT)/$1
+$$(TARGETROOT)/$1: $$(OBJROOT)/$1
+	@mkdir -p $$(@D)
+	cp $$< $$@
+	@ln -f -s $$(subst .pdf,.synctex.gz,$$<) $$(subst .pdf,.synctex.gz,$$@)
+endef
+
+# 出力される PDF のリスト
+$(eval $(call template_samename,master.pdf))
+
+
+# 全てのターゲットに依存する擬似ターゲット
+all: $(TARGETS)
+
+# 一時ディレクトリとターゲットを全て削除
+clean:
+	-rm -r $(OBJROOT)
+	-rm $(TARGETS)
+
+rebuild: clean $(TARGETS)
+
+# ターゲットのリストの先頭を表示
+view: $(TARGETS)
+	$(VIEWER) $(firstword $(TARGETS))
+
+# dvi ファイルから pdf ファイルを生成する
+$(OBJECTS:.aux=.pdf): %.pdf: %.dvi
+	$(DVIPDF) -o $@ $<
+
+# aux ファイルから dvi ファイルを生成する
+$(OBJECTS:.aux=.dvi): %.dvi: %.aux# %.d
+
+# aux ファイルと bib ファイルから bbl ファイルを生成する
+$(OBJECTS:.aux=.bbl): %.bbl: %.aux $(BIBLIOGRAPHY)/*.bib
+	cd $(OBJROOT) && $(BIBTEX) $(subst $(OBJROOT)/,,$(subst .bbl,,$@))
+
+# idx ファイルから ind ファイルを生成する
+$(OBJECTS:.aux=.ind): %.ind: %idx
+	cd $(OBJROOT) && $(MENDEX) $(subst $(OBJROOT)/,,$(subst .ind,,$@))
+
+# aux ファイルから idx ファイルを生成する
+$(OBJECTS:.aux=.idx): %.idx: %.aux
+
+# ltx ファイルから aux ファイルを生成する
+$(OBJECTS): $(OBJROOT)/%.aux: $(SRCROOT)/%.ltx $(FLAG)
+	@if [ $(MAKELEVEL) -lt $(MAXREPEAT) ]; then \
+		mkdir -p $(@D); \
+		$(LATEX) -output-directory=$(@D) -recorder $<; \
+		$(call mkdepends,$(subst .aux,.fls,$@),$(subst .aux,.aux,$@)) > $(subst .aux,.d,$@); \
+		if [ ! -f $@.prv ]; then \
+			$(MAKE) $(subst .aux,.bbl,$@); \
+			if [ -f $(subst .aux,.ind,$@) ]; then \
+				$(MAKE) $(subst .aux,.ind,$@); \
+			fi; \
+			cp $@ $@.prv; \
+			$(MAKE) $(subst .aux,.bbl,$@); \
+			$(MAKE) -W $< $@; \
+		elif [ $$(diff $@ $@.prv | wc -l) -ne 0 ]; then \
+			cp $@ $@.prv; \
+			$(MAKE) -W $< $@; \
+		fi; \
+	fi
+
+# 一時ディレクトリ内に必要なリンクを貼る
+define link
+	if [ ! -e $(OBJROOT)/$1 ]; then \
+		ln -s ../$1 $(OBJROOT); \
+	fi;
+endef
+$(FLAG):
+	@mkdir -p $(subst $(SRCROOT),$(OBJROOT),$(SRCDIRS))
+	@$(foreach dirname,$(OTHERDIRS),$(call link,$(dirname)))
+	@touch $(FLAG)
+
+# 一時ディレクトリ内の依存関係ファイルを読み込む
+-include $(OBJECTS:.aux=.d)
 
